@@ -23,14 +23,15 @@ const Welcome = () => {
 
     return (
         <Container className="layout">
-            <h1 className="mb-4">Welcome</h1>
+            <h2 className="mb-4 ">Welcome</h2>
             <Form>
                 <Form.Group className="mb-3">
                     <Form.Label>Enter First Name:</Form.Label>
                     <Form.Control
                         type="text"
                         onChange={handleInput}
-                        value={name}></Form.Control>
+                        value={name}
+                        required></Form.Control>
                 </Form.Group>
                 <div className="d-grid">
                     <Button variant="warning">

@@ -1,9 +1,14 @@
 import { Form, Modal, Button } from "react-bootstrap";
+import { createCategory } from "../services/services";
 
 const AddCategoryModal = ({ show, handleClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         handleClose();
+    };
+
+    const handleAddCategory = async () => {
+        await createCategory({ name: "Games", maximum: 500 });
     };
     return (
         <Modal show={show} onHide={handleClose} centered size="sm">
@@ -34,7 +39,10 @@ const AddCategoryModal = ({ show, handleClose }) => {
                         />
                     </Form.Group>
                     <div className="d-grid">
-                        <Button variant="warning" type="submit">
+                        <Button
+                            variant="warning"
+                            type="submit"
+                            onClick={handleAddCategory}>
                             Add
                         </Button>
                     </div>

@@ -1,10 +1,12 @@
 import { faGamepad, faMinus } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, ProgressBar, Stack, Button } from "react-bootstrap";
 import { currencyFormatter } from "../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { deleteCategory, getCategories } from "../services/services";
 
 const BudgetCard = ({
+    category,
     name,
     amount,
     maximum,
@@ -23,27 +25,36 @@ const BudgetCard = ({
 
     const handleProgressBarVariant = (amount, max) => {
         const progress = amount / max;
-        if (progress < 0.5) return "primary";
+        if (progress < 0.5) return "success";
         if (progress < 0.75) return "warning";
         return "danger";
+    };
+
+    // create delete category card
+    const handleDeleteCategory = async () => {
+        await deleteCategory(category.id);
     };
 
     return (
         <Card border="light" className={classNames.join(" ")}>
             <Card.Header className="cross bg-white text-black">
-                <FontAwesomeIcon icon={faMinus} />
+                <FontAwesomeIcon
+                    icon={faMinus}
+                    className="icon"
+                    onClick={handleDeleteCategory}
+                />
             </Card.Header>
             <Card.Body>
                 <div className="row align-items-center justify-content-between">
-                    <div className="col-sm text-warning ">
-                        <FontAwesomeIcon icon={faGamepad} size="2x" />
+                    <div className="col-12 col-sm-1  primary">
+                        <FontAwesomeIcon icon={faGamepad} size="lg" />
                     </div>
-                    <div className="col-lg">
-                        <Card.Title className="d-flex justify-content-between align-items-baseline fw-normal  mb-3">
-                            <div className="me-2">{name}</div>
+                    <div className="col-12 col-sm-10">
+                        <Card.Title className="d-flex justify-content-between align-items-baseline ">
+                            <h5>{name}</h5>
                             <div className="d-flex align-items-baseline fs-5">
                                 {currencyFormatter.format(amount)}
-                                <span className="text-muted fs-6 ms-1">
+                                <span className="text-muted fs-6">
                                     /{currencyFormatter.format(maximum)}
                                 </span>
                             </div>
@@ -54,7 +65,7 @@ const BudgetCard = ({
                             min={0}
                             now={amount}
                             max={maximum}
-                            label={`${(amount / maximum) * 100}%`}
+                            label={`${Math.round((amount / maximum) * 100)}%`}
                         />
                         <Stack direction="horizontal" gap="2" className="mt-4">
                             <Button
