@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import UsernameProvider from "./context/Username";
+import Budget from "./pages/Budget";
+import Welcome from "./pages/Welcome";
+import "./styles.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="Phone">
+            <BrowserRouter>
+                <UsernameProvider>
+                    <Routes>
+                        <Route path="/" element={<Welcome />} />
+                        <Route path="/budget" element={<Budget />} />
+                    </Routes>
+                </UsernameProvider>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;

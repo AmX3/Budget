@@ -1,0 +1,42 @@
+.Phone {
+    width: 400px;
+    height: 800px;
+    background: #f9f9f9;
+    border: 10px solid black;
+    border-radius: 50px;
+    box-shadow: -15px 10px 1px 1px #d3d3d3;
+    padding: 1.5rem 0.5rem;
+    overflow: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.cross {
+    text-align: right;
+}
+
+.card-columns {
+    display: flex;
+}
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
