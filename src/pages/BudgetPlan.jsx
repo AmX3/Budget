@@ -3,29 +3,25 @@ import { createFactory, useContext, useEffect, useState } from "react";
 import { UsernameContext } from "../context/Username";
 import BudgetCard from "../components/BudgetCard";
 import AddCategoryModal from "../components/AddCategoryModal";
-import AddExpenseModal from "../components/AddExpenseModal";
-import ViewExpenseModal from "../components/ViewExpenseModal";
-import { createCategory, getCategories } from "../services/services";
+import {
+    createCategory,
+    getCategories,
+    seedCategory,
+} from "../services/services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { BudgetContext } from "../context/Budget";
 
-const Budget = () => {
-    const { username } = useContext(UsernameContext);
+const BudgetPlan = () => {
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-    const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
-    const [showViewExpensesModal, setShowViewExpensesModal] = useState(false);
-    const [categories, setCategories] = useState([]);
 
-    // retrieve data from database
-    const getData = async () => {
-        const data = await getCategories();
-        setCategories(data);
-        console.log(data);
-    };
+    const { username } = useContext(UsernameContext);
+    const { getAllCategories, categories } = useContext(BudgetContext);
 
+    // retrieve data from database -> re-renders data everytime a change is made when deleting an existing category or adding a new category
     useEffect(() => {
-        getData();
-    }, []);
+        getAllCategories();
+    }, [categories]);
 
     return (
         <>
@@ -52,12 +48,6 @@ const Budget = () => {
                                 amount={100}
                                 maximum={category.maximum}
                                 gray
-                                onAddExpense={() =>
-                                    setShowAddExpenseModal(true)
-                                }
-                                onViewExpenses={() =>
-                                    setShowViewExpensesModal(true)
-                                }
                             />
                         );
                     })}
@@ -67,16 +57,8 @@ const Budget = () => {
                 show={showAddCategoryModal}
                 handleClose={() => setShowAddCategoryModal(false)}
             />
-            <AddExpenseModal
-                show={showAddExpenseModal}
-                handleClose={() => setShowAddExpenseModal(false)}
-            />
-            <ViewExpenseModal
-                show={showViewExpensesModal}
-                handleClose={() => setShowViewExpensesModal(false)}
-            />
         </>
     );
 };
 
-export default Budget;
+export default BudgetPlan;

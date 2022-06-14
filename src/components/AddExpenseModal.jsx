@@ -18,7 +18,7 @@ const AddExpenseModal = ({ show, handleClose }) => {
                         <Form.Control type="text" required />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="amount">
-                        <Form.Label>Amount:</Form.Label>
+                        <Form.Label>Amount</Form.Label>
                         <Form.Control
                             type="number"
                             required

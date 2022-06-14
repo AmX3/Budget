@@ -35,7 +35,10 @@ const Welcome = () => {
                 </Form.Group>
                 <div className="d-grid">
                     <Button variant="warning">
-                        <Link to="/budget" onClick={handleClick}>
+                        <Link
+                            to="/budget"
+                            onClick={handleClick}
+                            className="link">
                             Let's Budget!
                         </Link>
                     </Button>

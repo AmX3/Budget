@@ -26,6 +26,7 @@ export const createCategory = async (record) => {
 
 // Read - getting documents from our DB
 export const getCategories = async () => {
+    await seedCategory();
     const collectionRef = firestore.collection("categories");
     const queryData = await collectionRef.get();
     const documents = queryData.docs;

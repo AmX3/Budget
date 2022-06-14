@@ -3,7 +3,7 @@
 .Phone {
     width: 400px;
     height: 800px;
-    background: #f9f9f9;
+    background: #f8f9fa;
     border: 10px solid black;
     border-radius: 50px;
     box-shadow: -15px 10px 1px 1px #d3d3d3;
@@ -54,4 +54,9 @@ body {
 
 .icon:hover {
     transform: scale(0.95);
+}
+
+.link {
+    text-decoration: none;
+    color: black;
 }
