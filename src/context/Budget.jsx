@@ -2,6 +2,7 @@
 
 import { createContext, useState } from "react";
 import {
+    addNewExpense,
     createCategory,
     deleteCategory,
     getCategories,
@@ -34,15 +35,14 @@ const BudgetProvider = ({ children }) => {
         setCategories(data);
     };
 
-    const addCategory = async (name, maximum) => {
-        const newCategory = { name, maximum };
-        await createCategory(newCategory);
+    const addCategory = async ({ name, maximum }) => {
+        await createCategory({ name, maximum });
+        // if our newCategory has same name it will only return the current Category and not a new record
         setCategories((prevCategories) => {
-            // if our newCategory has same name it will only return the current Category and not a new record
             if (prevCategories.find((category) => category.name === name)) {
                 return prevCategories;
             }
-            return [...prevCategories, { newCategory }];
+            return [...prevCategories, { id: category.id, name, maximum }];
         });
     };
 
@@ -53,8 +53,9 @@ const BudgetProvider = ({ children }) => {
         });
     };
 
-    const addExpense = ({ name, amount, categoryId }) => {
+    const addExpense = async ({ name, amount, categoryId }) => {
         const newExpense = { name, amount, categoryId };
+        await addNewExpense(newExpense);
         setCategories((prevExpense) => {
             // if our newCategory has same name it will only return the current Category and not a new record
             if (prevExpense.find((expense) => expense.name === name)) {

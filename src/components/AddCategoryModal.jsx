@@ -1,25 +1,26 @@
 import { Form, Modal, Button } from "react-bootstrap";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { BudgetContext } from "../context/Budget";
 import { createCategory } from "../services/services";
 
 const AddCategoryModal = ({ show, handleClose }) => {
-    const { addCategory, categoryType, category, setCategory } =
-        useContext(BudgetContext);
+    const { addCategory, categoryType, categories } = useContext(BudgetContext);
 
-    const [maximumAmount, setMaximumAmount] = useState(0);
+    // referring to the selected values in dropdown and number
+    const nameRef = useRef();
+    const maximumRef = useRef();
+
     const handleSubmit = (e) => {
+        // Prevent default form behaviour
+        // Call addCategory from our BudgetContext and pass in our record
+        // Close modal when form is submitted
         e.preventDefault();
+        addCategory({
+            name: nameRef.current.value,
+            maximum: parseFloat(maximumRef.current.value),
+        });
         handleClose();
-    };
-
-    const handleAmount = (e) => {
-        setMaximumAmount(e.target.value);
-    };
-
-    // Able to handle the different options of my category dropdown
-    const handleCategoryTypeChange = (e) => {
-        setCategory(e.target.value);
+        console.log(categories);
     };
 
     return (
@@ -32,7 +33,8 @@ const AddCategoryModal = ({ show, handleClose }) => {
                     <Form.Group className="mb-3" controlId="name">
                         <Form.Label>Category Name</Form.Label>
                         <Form.Select
-                            onChange={handleCategoryTypeChange}
+                            ref={nameRef}
+                            // onChange={handleCategoryTypeChange}
                             defaultValue="Default"
                             required>
                             {categoryType.map((type) => {
@@ -49,18 +51,15 @@ const AddCategoryModal = ({ show, handleClose }) => {
                         <Form.Control
                             type="number"
                             required
+                            ref={maximumRef}
                             min={0}
                             step={0.01}
                             placeholder="0"
-                            onChange={handleAmount}></Form.Control>
+                            // onChange={handleAmount}
+                        ></Form.Control>
                     </Form.Group>
                     <div className="d-grid">
-                        <Button
-                            variant="warning"
-                            type="submit"
-                            onClick={() =>
-                                addCategory(category, maximumAmount)
-                            }>
+                        <Button variant="warning" type="submit">
                             Add
                         </Button>
                     </div>

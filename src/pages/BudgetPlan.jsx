@@ -16,12 +16,13 @@ const BudgetPlan = () => {
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
 
     const { username } = useContext(UsernameContext);
-    const { getAllCategories, categories } = useContext(BudgetContext);
+    const { getAllCategories, categories, getCategoryExpenses } =
+        useContext(BudgetContext);
 
     // retrieve data from database -> re-renders data everytime a change is made when deleting an existing category or adding a new category
     useEffect(() => {
         getAllCategories();
-    }, [categories]);
+    }, []);
 
     return (
         <>
@@ -40,12 +41,17 @@ const BudgetPlan = () => {
                 </Stack>
                 <div className="grid">
                     {categories.map((category) => {
+                        // this amount represents the total amount derived from expenses
+                        const amount = getCategoryExpenses(category.id).reduce(
+                            (total, expense) => total + expense.amount,
+                            0
+                        );
                         return (
                             <BudgetCard
                                 key={category.id}
                                 category={category}
                                 name={category.name}
-                                amount={100}
+                                amount={amount}
                                 maximum={category.maximum}
                                 gray
                             />

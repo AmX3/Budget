@@ -6,6 +6,8 @@ const AddExpenseModal = ({ show, handleClose }) => {
         handleClose();
     };
 
+    // create a function that adds an amount to reduce
+
     return (
         <Modal show={show} onHide={handleClose} centered size="sm">
             <Form onSubmit={handleSubmit}>
@@ -24,6 +26,7 @@ const AddExpenseModal = ({ show, handleClose }) => {
                             required
                             min={0}
                             step={0.01}
+                            placeholder="0"
                         />
                     </Form.Group>
                     <div className="d-grid">

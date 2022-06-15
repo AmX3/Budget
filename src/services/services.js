@@ -26,7 +26,6 @@ export const createCategory = async (record) => {
 
 // Read - getting documents from our DB
 export const getCategories = async () => {
-    await seedCategory();
     const collectionRef = firestore.collection("categories");
     const queryData = await collectionRef.get();
     const documents = queryData.docs;
@@ -37,4 +36,14 @@ export const getCategories = async () => {
 
 export const deleteCategory = async (id) => {
     await firestore.collection("categories").doc(id).delete();
+};
+
+// Expenses => add new expenses field in our category
+export const addNewExpense = async (newExpense) => {
+    const snapshot = await firestore.collection("categories").get();
+    return snapshot.docs.map((doc) => {
+        doc.collection("categories")
+            .doc(doc.id)
+            .update({ expenses: [{ newExpense }] });
+    });
 };
