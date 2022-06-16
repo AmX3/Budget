@@ -13,6 +13,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { BudgetContext } from "../context/Budget";
 import TotalCategoryCard from "../components/TotalCategoryCard";
+import {
+    faBagShopping,
+    faBolt,
+    faBus,
+    faCutlery,
+    faGamepad,
+    faHeartPulse,
+    faPlaneDeparture,
+} from "@fortawesome/free-solid-svg-icons";
 
 const BudgetPlan = () => {
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
@@ -20,6 +29,19 @@ const BudgetPlan = () => {
     const { username } = useContext(UsernameContext);
     const { getAllCategories, categories, getCategoryExpenses, expenses } =
         useContext(BudgetContext);
+
+    const categoryType = {
+        Entertainment: faGamepad,
+        Food: faCutlery,
+        Transport: faBus,
+        Travel: faPlaneDeparture,
+        Utilities: faBolt,
+        Health: faHeartPulse,
+        Shopping: faBagShopping,
+    };
+
+    // https://stackoverflow.com/questions/57836266/conditionally-change-icons-for-array-values
+    // const [icon, setIcon] = useState(categoryType);
 
     // retrieve data from database -> re-renders data everytime a change is made when deleting an existing category or adding a new category
     useEffect(() => {
@@ -43,8 +65,9 @@ const BudgetPlan = () => {
                         Add Category
                     </Button>
                 </Stack>
+                <TotalCategoryCard />
+
                 <div className="grid">
-                    {/* <TotalCategoryCard /> */}
                     {categories.map((category) => {
                         // this amount represents the total amount derived from expenses
                         const amount = !category.expenses
@@ -61,6 +84,7 @@ const BudgetPlan = () => {
                                 amount={amount}
                                 maximum={category.maximum}
                                 gray
+                                categoryType={categoryType}
                             />
                         );
                     })}

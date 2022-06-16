@@ -17,7 +17,7 @@ const BudgetProvider = ({ children }) => {
 
     // return all expenses associated with a specific category
     const getCategoryExpenses = (categoryId) => {
-        return expenses.filter((expense) => expense.categoryId === categoryId);
+        return expenses;
         // return expenses.filter((expense) => expense.id === categoryId);
     };
 

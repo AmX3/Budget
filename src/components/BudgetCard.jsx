@@ -7,7 +7,14 @@ import { deleteCategory, getCategories } from "../services/services";
 import AddExpenseModal from "../components/AddExpenseModal";
 import ViewExpenseModal from "../components/ViewExpenseModal";
 
-const BudgetCard = ({ category, name, amount, maximum, gray }) => {
+const BudgetCard = ({
+    category,
+    name,
+    amount,
+    maximum,
+    gray,
+    categoryType,
+}) => {
     const classNames = [];
 
     const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
@@ -51,7 +58,10 @@ const BudgetCard = ({ category, name, amount, maximum, gray }) => {
                 <Card.Body>
                     <div className="row align-items-center justify-content-between">
                         <div className="col-12 col-sm-1  primary">
-                            <FontAwesomeIcon icon={faGamepad} size="lg" />
+                            <FontAwesomeIcon
+                                icon={categoryType[category.name]}
+                                size="lg"
+                            />
                         </div>
                         <div className="col-12 col-sm-10">
                             <Card.Title className="d-flex justify-content-between align-items-baseline ">

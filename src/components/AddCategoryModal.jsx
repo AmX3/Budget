@@ -2,6 +2,15 @@ import { Form, Modal, Button } from "react-bootstrap";
 import { useContext, useState, useRef } from "react";
 import { BudgetContext } from "../context/Budget";
 import { createCategory } from "../services/services";
+import {
+    faBagShopping,
+    faBolt,
+    faBus,
+    faCutlery,
+    faGamepad,
+    faHeartPulse,
+    faPlaneDeparture,
+} from "@fortawesome/free-solid-svg-icons";
 
 const AddCategoryModal = ({ show, handleClose }) => {
     const { addCategory, categories } = useContext(BudgetContext);
@@ -9,15 +18,16 @@ const AddCategoryModal = ({ show, handleClose }) => {
     // referring to the selected values in dropdown and number
     const nameRef = useRef();
     const maximumRef = useRef();
-    const categoryType = [
-        "Entertainment",
-        "Food",
-        "Transport",
-        "Travel",
-        "Utilities",
-        "Health",
-        "Shopping",
-    ];
+    const categoryType = {
+        Entertainment: faGamepad,
+        Food: faCutlery,
+        Transport: faBus,
+        Travel: faPlaneDeparture,
+        Utilities: faBolt,
+        Health: faHeartPulse,
+        Shopping: faBagShopping,
+    };
+    console.log(Object.keys(categoryType));
 
     const handleSubmit = (e) => {
         // Prevent default form behaviour
@@ -45,7 +55,7 @@ const AddCategoryModal = ({ show, handleClose }) => {
                             ref={nameRef}
                             defaultValue="Default"
                             required>
-                            {categoryType.map((type) => {
+                            {Object.keys(categoryType).map((type) => {
                                 return (
                                     <option key={type} value={type}>
                                         {type}
