@@ -4,11 +4,20 @@ import { BudgetContext } from "../context/Budget";
 import { createCategory } from "../services/services";
 
 const AddCategoryModal = ({ show, handleClose }) => {
-    const { addCategory, categoryType, categories } = useContext(BudgetContext);
+    const { addCategory, categories } = useContext(BudgetContext);
 
     // referring to the selected values in dropdown and number
     const nameRef = useRef();
     const maximumRef = useRef();
+    const categoryType = [
+        "Entertainment",
+        "Food",
+        "Transport",
+        "Travel",
+        "Utilities",
+        "Health",
+        "Shopping",
+    ];
 
     const handleSubmit = (e) => {
         // Prevent default form behaviour
@@ -34,7 +43,6 @@ const AddCategoryModal = ({ show, handleClose }) => {
                         <Form.Label>Category Name</Form.Label>
                         <Form.Select
                             ref={nameRef}
-                            // onChange={handleCategoryTypeChange}
                             defaultValue="Default"
                             required>
                             {categoryType.map((type) => {
@@ -54,9 +62,7 @@ const AddCategoryModal = ({ show, handleClose }) => {
                             ref={maximumRef}
                             min={0}
                             step={0.01}
-                            placeholder="0"
-                            // onChange={handleAmount}
-                        ></Form.Control>
+                            placeholder="0"></Form.Control>
                     </Form.Group>
                     <div className="d-grid">
                         <Button variant="warning" type="submit">

@@ -6,28 +6,19 @@ import {
     createCategory,
     deleteCategory,
     getCategories,
+    getExpenses,
 } from "../services/services";
 
 export const BudgetContext = createContext();
 
 const BudgetProvider = ({ children }) => {
     const [categories, setCategories] = useState([]);
-    const [expenses, setExpenses] = useState([]);
-    const categoryType = [
-        "Entertainment",
-        "Food",
-        "Transport",
-        "Travel",
-        "Utilities",
-        "Health",
-        "Shopping",
-    ];
-
-    const [category, setCategory] = useState(categoryType[0]);
+    const [expenses, setExpenses] = useState([{}]);
 
     // return all expenses associated with a specific category
     const getCategoryExpenses = (categoryId) => {
-        return expenses.filter((expense) => expense.id === categoryId);
+        return expenses.filter((expense) => expense.categoryId === categoryId);
+        // return expenses.filter((expense) => expense.id === categoryId);
     };
 
     const getAllCategories = async () => {
@@ -42,7 +33,7 @@ const BudgetProvider = ({ children }) => {
             if (prevCategories.find((category) => category.name === name)) {
                 return prevCategories;
             }
-            return [...prevCategories, { id: category.id, name, maximum }];
+            return [...prevCategories, { name, maximum }];
         });
     };
 
@@ -53,17 +44,12 @@ const BudgetProvider = ({ children }) => {
         });
     };
 
-    const addExpense = async ({ name, amount, categoryId }) => {
-        const newExpense = { name, amount, categoryId };
-        await addNewExpense(newExpense);
-        setCategories((prevExpense) => {
-            // if our newCategory has same name it will only return the current Category and not a new record
-            if (prevExpense.find((expense) => expense.name === name)) {
-                return prevExpense;
-            }
-            return [...prevExpense, { newExpense }];
+    const addExpense = async ({ description, amount, categoryId }) => {
+        setExpenses((prevExpense) => {
+            return [...prevExpense, { description, amount, categoryId }];
         });
     };
+
     const deleteExpenses = ({ id }) => {
         setExpenses((prevExpenses) => {
             return prevExpenses.filter((expense) => expense.id !== id);
@@ -73,9 +59,6 @@ const BudgetProvider = ({ children }) => {
     return (
         <BudgetContext.Provider
             value={{
-                category,
-                setCategory,
-                categoryType,
                 categories,
                 expenses,
                 getAllCategories,

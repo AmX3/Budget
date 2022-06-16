@@ -11,7 +11,13 @@ const BudgetCard = ({ category, name, amount, maximum, gray }) => {
     const classNames = [];
 
     const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
+    const [addExpenseModalCategoryId, setAddExpenseCategoryId] = useState();
     const [showViewExpensesModal, setShowViewExpensesModal] = useState(false);
+
+    const openAddExpenseModal = (categoryId) => {
+        setShowAddExpenseModal(true);
+        setAddExpenseCategoryId(categoryId);
+    };
 
     // Change card background colour depending on current amount being greater than set budget limit
     if (amount > maximum) {
@@ -78,9 +84,7 @@ const BudgetCard = ({ category, name, amount, maximum, gray }) => {
                                     variant="outline-primary"
                                     type="submit"
                                     className="btn-sm ms-auto"
-                                    onClick={() =>
-                                        setShowAddExpenseModal(true)
-                                    }>
+                                    onClick={openAddExpenseModal}>
                                     Add Expense
                                 </Button>
                                 <Button
@@ -99,7 +103,9 @@ const BudgetCard = ({ category, name, amount, maximum, gray }) => {
             </Card>
 
             <AddExpenseModal
+                category={category}
                 show={showAddExpenseModal}
+                defaultCategoryId={addExpenseModalCategoryId}
                 handleClose={() => setShowAddExpenseModal(false)}
             />
             <ViewExpenseModal

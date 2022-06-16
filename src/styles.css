@@ -60,3 +60,9 @@ body {
     text-decoration: none;
     color: black;
 }
+
+.total {
+    height: 100px;
+    width: 100%;
+    background: white;
+}

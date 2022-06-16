@@ -1,12 +1,35 @@
 import { Form, Modal, Button } from "react-bootstrap";
+import { useContext, useRef } from "react";
+import { BudgetContext } from "../context/Budget";
+import { addNewExpense } from "../services/services";
 
-const AddExpenseModal = ({ show, handleClose }) => {
-    const handleSubmit = (e) => {
+const AddExpenseModal = ({
+    show,
+    handleClose,
+    defaultCategoryId,
+    category,
+}) => {
+    const descriptionRef = useRef();
+    const amountRef = useRef();
+    const categoryIdRef = useRef();
+
+    const { addExpense, categories, expenses } = useContext(BudgetContext);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        await addNewExpense(category.id, {
+            description: descriptionRef.current.value,
+            amount: parseFloat(amountRef.current.value),
+        });
+        addExpense({
+            description: descriptionRef.current.value,
+            amount: parseFloat(amountRef.current.value),
+            categoryId: categoryIdRef.current.value,
+        });
+        console.log(expenses);
+
         handleClose();
     };
-
-    // create a function that adds an amount to reduce
 
     return (
         <Modal show={show} onHide={handleClose} centered size="sm">
@@ -15,15 +38,31 @@ const AddExpenseModal = ({ show, handleClose }) => {
                     <Modal.Title>New Expense</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <Form.Group className="mb-3" controlId="name">
+                        <Form.Label>Category</Form.Label>
+                        <Form.Select
+                            defaultValue={defaultCategoryId}
+                            ref={categoryIdRef}
+                            disabled>
+                            <option value={categoryIdRef.id}>
+                                {category.name}
+                            </option>
+                        </Form.Select>
+                    </Form.Group>
                     <Form.Group className="mb-3" controlId="description">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" required />
+                        <Form.Control
+                            ref={descriptionRef}
+                            type="text"
+                            required
+                        />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="amount">
                         <Form.Label>Amount</Form.Label>
                         <Form.Control
                             type="number"
                             required
+                            ref={amountRef}
                             min={0}
                             step={0.01}
                             placeholder="0"

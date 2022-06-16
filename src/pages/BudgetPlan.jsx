@@ -7,22 +7,26 @@ import {
     createCategory,
     getCategories,
     seedCategory,
+    getExpenses,
 } from "../services/services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { BudgetContext } from "../context/Budget";
+import TotalCategoryCard from "../components/TotalCategoryCard";
 
 const BudgetPlan = () => {
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
 
     const { username } = useContext(UsernameContext);
-    const { getAllCategories, categories, getCategoryExpenses } =
+    const { getAllCategories, categories, getCategoryExpenses, expenses } =
         useContext(BudgetContext);
 
     // retrieve data from database -> re-renders data everytime a change is made when deleting an existing category or adding a new category
     useEffect(() => {
         getAllCategories();
-    }, []);
+    }, [expenses]);
+
+    console.log(expenses);
 
     return (
         <>
@@ -40,12 +44,15 @@ const BudgetPlan = () => {
                     </Button>
                 </Stack>
                 <div className="grid">
+                    {/* <TotalCategoryCard /> */}
                     {categories.map((category) => {
                         // this amount represents the total amount derived from expenses
-                        const amount = getCategoryExpenses(category.id).reduce(
-                            (total, expense) => total + expense.amount,
-                            0
-                        );
+                        const amount = !category.expenses
+                            ? 0
+                            : category.expenses
+                                  .map((expense) => expense.amount)
+                                  .reduce((acc, sum) => acc + sum);
+
                         return (
                             <BudgetCard
                                 key={category.id}

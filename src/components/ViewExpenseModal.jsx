@@ -1,6 +1,8 @@
 import { faX, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, Modal } from "react-bootstrap";
+import { currencyFormatter } from "../utils";
+import { deleteExpense } from "../services/services";
 
 const ViewExpenseModal = ({ show, handleClose, category }) => {
     const handleSubmit = (e) => {
@@ -18,13 +20,23 @@ const ViewExpenseModal = ({ show, handleClose, category }) => {
                         return (
                             <div className="row justify-content-between align-items-baseline">
                                 <div className="col-sm" key={index}>
-                                    <h6>{Object.keys(expense)}</h6>
+                                    <h6>{expense.description}</h6>
                                 </div>
                                 <div className="col-sm">
-                                    <p>{Object.values(expense)}</p>
+                                    <p>
+                                        {currencyFormatter.format(
+                                            expense.amount
+                                        )}
+                                    </p>
                                 </div>
                                 <div className="col-sm cross icon ">
-                                    <FontAwesomeIcon icon={faXmark} size="sm" />
+                                    <FontAwesomeIcon
+                                        icon={faXmark}
+                                        size="sm"
+                                        onClick={() =>
+                                            deleteExpense(category.id, category)
+                                        }
+                                    />
                                 </div>
                             </div>
                         );

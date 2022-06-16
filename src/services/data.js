@@ -2,7 +2,7 @@ export const categories = [
     {
         name: "Entertainment",
         maximum: 50,
-        expenses: [[{ Spotify: 1000 }, { Spotify: 1000 }, { Spotify: 1000 }]],
+        expenses: [{ Spotify: 1000 }, { Spotify: 1000 }, { Spotify: 1000 }],
     },
     {
         name: "Food",
