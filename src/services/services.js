@@ -27,7 +27,10 @@ export const deleteCategory = async (id) => {
 export const addNewExpense = async (categoryId, record) => {
     const expensesRef = doc(firestore, "categories", categoryId);
     if (!expensesRef) {
-        return;
+        await updateDoc(expensesRef, {
+            expenses: arrayUnion(record),
+        });
+        return record;
     }
     // Automatically add a new record of our expenses to our database
     await updateDoc(expensesRef, {

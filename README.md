@@ -6,7 +6,7 @@ A hobby project based around creating a budget app, allowing the user to set a b
 
 ## User Interface Design
 
-Before writing any code, I decided to come up with the app design, as an outline and indicator of the number of screens and components/features needed.
+Before writing any code, I decided to come up with the app design, as an outline and indicator of the number of screens and components/features needed. Some design modifications were made further down the line.
 
 **Here is a link to the figma design of the app:**
 
@@ -14,7 +14,7 @@ https://www.figma.com/file/soJq5gKdBy1h8OMoH2UXeo/Budget-App?node-id=0%3A1
 
 ### Figma Screenshot
 
-![caption](./src/images/Project.png)
+![caption](./project.png)
 
 ## Goal
 
@@ -28,6 +28,11 @@ https://www.figma.com/file/soJq5gKdBy1h8OMoH2UXeo/Budget-App?node-id=0%3A1
 -   React Router DOM
 -   Figma
 -   Bootstrap
+
+## Data Storage
+
+**Structure of data**
+![caption](./data.png)
 
 ### Future Implementations
 
