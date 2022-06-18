@@ -8,7 +8,7 @@ import "./styles.css";
 function App() {
     return (
         <div className="Phone">
-            <BrowserRouter>
+            <BrowserRouter basename="/Budget">
                 <UsernameProvider>
                     <BudgetProvider>
                         <Routes>

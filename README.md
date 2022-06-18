@@ -32,6 +32,7 @@ https://www.figma.com/file/soJq5gKdBy1h8OMoH2UXeo/Budget-App?node-id=0%3A1
 ## Data Storage
 
 **Structure of data**
+
 ![caption](./data.png)
 
 ### Future Implementations
