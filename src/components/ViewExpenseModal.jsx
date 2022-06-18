@@ -1,11 +1,7 @@
-import { faX, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import { currencyFormatter } from "../utils";
-import { deleteExpense } from "../services/services";
 
 const ViewExpenseModal = ({ show, handleClose, category }) => {
-    const { expenses } = category;
     return (
         <Modal show={show} onHide={handleClose} centered size="sm">
             <Modal.Header closeButton onClick={handleClose}>
@@ -18,26 +14,13 @@ const ViewExpenseModal = ({ show, handleClose, category }) => {
                 ) : (
                     category.expenses.map((expense, index) => {
                         return (
-                            <div className="row justify-content-between align-items-baseline">
-                                <div className="col-sm" key={index}>
-                                    <h6>{expense.description}</h6>
-                                </div>
-                                <div className="col-sm">
-                                    <p>
-                                        {currencyFormatter.format(
-                                            expense.amount
-                                        )}
-                                    </p>
-                                </div>
-                                <div className="col-sm cross icon ">
-                                    <FontAwesomeIcon
-                                        icon={faXmark}
-                                        size="sm"
-                                        onClick={() =>
-                                            deleteExpense(category.id, category)
-                                        }
-                                    />
-                                </div>
+                            <div
+                                className="d-flex justify-content-between"
+                                key={index}>
+                                <h6>{expense.description}</h6>
+                                <p>
+                                    {currencyFormatter.format(expense.amount)}
+                                </p>
                             </div>
                         );
                     })

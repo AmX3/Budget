@@ -2,11 +2,9 @@
 
 import { createContext, useState } from "react";
 import {
-    addNewExpense,
     createCategory,
     deleteCategory,
     getCategories,
-    getExpenses,
 } from "../services/services";
 
 export const BudgetContext = createContext();
@@ -15,46 +13,41 @@ const BudgetProvider = ({ children }) => {
     const [categories, setCategories] = useState([]);
     const [expenses, setExpenses] = useState([{}]);
 
-    // return all expenses associated with a specific category
-    const getCategoryExpenses = (categoryId) => {
-        return expenses;
-        // return expenses.filter((expense) => expense.id === categoryId);
-    };
-
     const getAllCategories = async () => {
         const data = await getCategories();
         setCategories(data);
     };
 
-    const addCategory = async ({ name, maximum }) => {
-        await createCategory({ name, maximum });
-        // if our newCategory has same name it will only return the current Category and not a new record
+    const addCategory = ({ name, maximum }) => {
+        // If our newCategory and the currentCategory have the same name, the currentCategory will be returned. This avoids the creation of duplicate categories; alternatively, build a new category record in firestore.
         setCategories((prevCategories) => {
             if (prevCategories.find((category) => category.name === name)) {
+                console.log(`${name} has already been added`);
                 return prevCategories;
             }
+            createCategory({ name, maximum });
             return [...prevCategories, { name, maximum }];
         });
     };
 
     const deleteCategories = async ({ id }) => {
-        await deleteCategory(id);
         setCategories((prevCategories) => {
             return prevCategories.filter((category) => category.id !== id);
         });
+        await deleteCategory(id);
     };
 
-    const addExpense = async ({ description, amount, categoryId }) => {
+    const addExpense = ({ description, amount }) => {
         setExpenses((prevExpense) => {
-            return [...prevExpense, { description, amount, categoryId }];
+            return [...prevExpense, { description, amount }];
         });
     };
 
-    const deleteExpenses = ({ id }) => {
-        setExpenses((prevExpenses) => {
-            return prevExpenses.filter((expense) => expense.id !== id);
-        });
-    };
+    // const deleteExpenses = ({ id }) => {
+    //     setExpenses((prevExpenses) => {
+    //         return prevExpenses.filter((expense) => expense.id !== id);
+    //     });
+    // };
 
     return (
         <BudgetContext.Provider
@@ -64,10 +57,8 @@ const BudgetProvider = ({ children }) => {
                 getAllCategories,
                 addCategory,
                 deleteCategories,
-                getCategoryExpenses,
                 addExpense,
                 setExpenses,
-                deleteExpenses,
             }}>
             {children}
         </BudgetContext.Provider>

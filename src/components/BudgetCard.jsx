@@ -1,9 +1,9 @@
-import { faGamepad, faMinus } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState } from "react";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
 import { Card, ProgressBar, Stack, Button } from "react-bootstrap";
 import { currencyFormatter } from "../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { deleteCategory, getCategories } from "../services/services";
+import { deleteCategory } from "../services/services";
 import AddExpenseModal from "../components/AddExpenseModal";
 import ViewExpenseModal from "../components/ViewExpenseModal";
 
@@ -15,6 +15,7 @@ const BudgetCard = ({
     gray,
     categoryType,
 }) => {
+    // Joining multiple bootstrap css properties together
     const classNames = [];
 
     const [showAddExpenseModal, setShowAddExpenseModal] = useState(false);
@@ -51,16 +52,17 @@ const BudgetCard = ({
                 <Card.Header className="cross bg-white text-black">
                     <FontAwesomeIcon
                         icon={faMinus}
-                        className="icon"
+                        className="close"
                         onClick={handleDeleteCategory}
                     />
                 </Card.Header>
                 <Card.Body>
-                    <div className="row align-items-center justify-content-between">
-                        <div className="col-12 col-sm-1  primary">
+                    <div className="d-flex align-items-center justify-content-between ">
+                        <div className="col-sm ">
                             <FontAwesomeIcon
                                 icon={categoryType[category.name]}
                                 size="lg"
+                                className="categoryIcon "
                             />
                         </div>
                         <div className="col-12 col-sm-10">
@@ -91,14 +93,14 @@ const BudgetCard = ({
                                 gap="2"
                                 className="mt-4">
                                 <Button
-                                    variant="outline-primary"
+                                    variant="primary"
                                     type="submit"
                                     className="btn-sm ms-auto"
                                     onClick={openAddExpenseModal}>
                                     Add Expense
                                 </Button>
                                 <Button
-                                    variant="outline-secondary"
+                                    variant="warning "
                                     type="submit"
                                     className="btn-sm ms-auto"
                                     onClick={() =>

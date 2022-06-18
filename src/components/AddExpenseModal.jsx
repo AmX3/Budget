@@ -13,7 +13,7 @@ const AddExpenseModal = ({
     const amountRef = useRef();
     const categoryIdRef = useRef();
 
-    const { addExpense, categories, expenses } = useContext(BudgetContext);
+    const { addExpense } = useContext(BudgetContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,10 +24,7 @@ const AddExpenseModal = ({
         addExpense({
             description: descriptionRef.current.value,
             amount: parseFloat(amountRef.current.value),
-            categoryId: categoryIdRef.current.value,
         });
-        console.log(expenses);
-
         handleClose();
     };
 

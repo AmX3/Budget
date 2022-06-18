@@ -47,17 +47,30 @@ body {
     width: 100%;
 }
 
-.icon {
+.close {
     transition: all 0.3s;
     cursor: pointer;
 }
 
-.icon:hover {
-    transform: scale(0.95);
+.categoryIcon {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #ffd166;
+    padding: 0.3em;
+    text-align: center;
+    color: black;
+}
+
+.close:hover {
+    transform: scale(0.85);
 }
 
 .link {
     text-decoration: none;
+    color: black;
+}
+.link:hover {
     color: black;
 }
 
@@ -65,4 +78,8 @@ body {
     height: 100px;
     width: 100%;
     background: white;
+}
+/* removes outline on bootstrap buttons */
+.btn:focus {
+    box-shadow: none;
 }

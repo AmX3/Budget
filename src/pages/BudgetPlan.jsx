@@ -1,14 +1,8 @@
 import { Button, Container, Stack } from "react-bootstrap";
-import { createFactory, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UsernameContext } from "../context/Username";
 import BudgetCard from "../components/BudgetCard";
 import AddCategoryModal from "../components/AddCategoryModal";
-import {
-    createCategory,
-    getCategories,
-    seedCategory,
-    getExpenses,
-} from "../services/services";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { BudgetContext } from "../context/Budget";
@@ -27,9 +21,10 @@ const BudgetPlan = () => {
     const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
 
     const { username } = useContext(UsernameContext);
-    const { getAllCategories, categories, getCategoryExpenses, expenses } =
+    const { getAllCategories, categories, expenses } =
         useContext(BudgetContext);
 
+    // https://stackoverflow.com/questions/57836266/conditionally-change-icons-for-array-values
     const categoryType = {
         Entertainment: faGamepad,
         Food: faCutlery,
@@ -40,20 +35,15 @@ const BudgetPlan = () => {
         Shopping: faBagShopping,
     };
 
-    // https://stackoverflow.com/questions/57836266/conditionally-change-icons-for-array-values
-    // const [icon, setIcon] = useState(categoryType);
-
-    // retrieve data from database -> re-renders data everytime a change is made when deleting an existing category or adding a new category
+    // retrieve data from database -> re-renders data everytime a change is made when deleting an existing category or adding a new category in addition to changes mades in expenses
     useEffect(() => {
         getAllCategories();
-    }, [expenses]);
-
-    console.log(expenses);
+    }, [categories, expenses]);
 
     return (
         <>
             <Container fluid className="mb-4">
-                <h2>{`Hi ${username}`}</h2>
+                <h2 className="mb-5 mt-3">{`Hi ${username}`}</h2>
                 <Stack
                     direction="horizontal"
                     className="mb-4 justify-content-between align-items-baseline">
@@ -61,8 +51,7 @@ const BudgetPlan = () => {
                     <Button
                         variant="warning"
                         onClick={() => setShowAddCategoryModal(true)}>
-                        <FontAwesomeIcon icon={faPlus} />
-                        Add Category
+                        <FontAwesomeIcon icon={faPlus} /> &nbsp; Add Category
                     </Button>
                 </Stack>
                 <TotalCategoryCard />

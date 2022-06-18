@@ -27,7 +27,6 @@ const AddCategoryModal = ({ show, handleClose }) => {
         Health: faHeartPulse,
         Shopping: faBagShopping,
     };
-    console.log(Object.keys(categoryType));
 
     const handleSubmit = (e) => {
         // Prevent default form behaviour
@@ -39,7 +38,6 @@ const AddCategoryModal = ({ show, handleClose }) => {
             maximum: parseFloat(maximumRef.current.value),
         });
         handleClose();
-        console.log(categories);
     };
 
     return (
