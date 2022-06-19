@@ -13,14 +13,25 @@ import "firebase/compat/app";
 //     appId: "1:607530223022:web:e83dc7f4aef9c1edb2f43f",
 // };
 
+// const firebaseConfig = {
+//     apiKey: "AIzaSyA9v5nO8zF1bYZetb4PcZNUpmzaKA16YOg",
+//     authDomain: "budget-second.firebaseapp.com",
+//     projectId: "budget-second",
+//     storageBucket: "budget-second.appspot.com",
+//     messagingSenderId: "293064886575",
+//     appId: "1:293064886575:web:52241fb9c1903c9e09b9da",
+// };
+
 const firebaseConfig = {
-    apiKey: "AIzaSyA9v5nO8zF1bYZetb4PcZNUpmzaKA16YOg",
-    authDomain: "budget-second.firebaseapp.com",
-    projectId: "budget-second",
-    storageBucket: "budget-second.appspot.com",
-    messagingSenderId: "293064886575",
-    appId: "1:293064886575:web:52241fb9c1903c9e09b9da",
+    apiKey: "AIzaSyCVebQDGg-5FPdcmmTzcjwhr_s8_OyTBj0",
+    authDomain: "budget-third.firebaseapp.com",
+    projectId: "budget-third",
+    storageBucket: "budget-third.appspot.com",
+    messagingSenderId: "961358713486",
+    appId: "1:961358713486:web:0da2cd7298441ea3072fdf",
 };
+
+// Initialize Firebase
 
 firebase.initializeApp(firebaseConfig);
 

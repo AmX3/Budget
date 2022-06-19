@@ -23,20 +23,24 @@ export const deleteCategory = async (id) => {
     await firestore.collection("categories").doc(id).delete();
 };
 
+export const getExpenses = async (categoryId) => {
+    const items = await getCategories(categoryId).get("expenses");
+    if (!items) {
+        addNewExpense();
+    }
+    // if the expense field has not been created do this otherwise get the expenses
+};
 // Expenses => add new expenses field in our category
 export const addNewExpense = async (categoryId, record) => {
     const expensesRef = doc(firestore, "categories", categoryId);
-    if (!expensesRef) {
-        await updateDoc(expensesRef, {
-            expenses: arrayUnion(record),
-        });
-        return record;
-    }
+
     // Automatically add a new record of our expenses to our database
     await updateDoc(expensesRef, {
         expenses: arrayUnion(record),
     });
 };
+
+// do add to cart context or call get expenses on add new expenses
 
 // export const deleteExpense = async (categoryId, record) => {
 //     const expensesRef = doc(firestore, "categories", categoryId);

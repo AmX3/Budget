@@ -1,7 +1,12 @@
 import { Form, Modal, Button } from "react-bootstrap";
 import { useContext, useRef } from "react";
 import { BudgetContext } from "../context/Budget";
-import { addNewExpense } from "../services/services";
+import {
+    addNewExpense,
+    getCategories,
+    getExpenses,
+} from "../services/services";
+import { useEffect } from "react";
 
 const AddExpenseModal = ({
     show,
@@ -13,7 +18,7 @@ const AddExpenseModal = ({
     const amountRef = useRef();
     const categoryIdRef = useRef();
 
-    const { addExpense } = useContext(BudgetContext);
+    const { addExpense, expenses, categories } = useContext(BudgetContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,6 +32,10 @@ const AddExpenseModal = ({
         });
         handleClose();
     };
+
+    // useEffect(() => {
+    //     getExpenses(category.id);
+    // }, []);
 
     return (
         <Modal show={show} onHide={handleClose} centered size="sm">
