@@ -33,10 +33,6 @@ const AddExpenseModal = ({
         handleClose();
     };
 
-    // useEffect(() => {
-    //     getExpenses(category.id);
-    // }, []);
-
     return (
         <Modal show={show} onHide={handleClose} centered size="sm">
             <Form onSubmit={handleSubmit}>
